@@ -1,0 +1,33 @@
+---
+title: "Exemplo de mapa dos PIBs municipais de Goiás"
+author: "Tomás Barcellos"
+output: html_document
+---
+
+# Baixar dados dos PIBs de Goiás
+
+```{r}
+# install.packages("devtools")
+# download e instalação de pacote para Mapa
+# gitlab <- readLines('.gitlab')
+# url <- paste0('https://', gitlab[1], ':', gitlab[2],'@gitlab.com/tomasbarcellos/miojoWebMap.git')
+# system('cmd.exe', input = paste('git clone', url))
+# devtools::install('miojoWebMap')
+
+resposta <- readLines('http://api.sidra.ibge.gov.br/values/t/5938/n6/in n3 52/p/2014/v/37',
+                      encoding = 'UTF-8', warn = FALSE)
+PIBs_GO <- jsonlite::fromJSON(resposta, simplifyDataFrame = TRUE)
+names(PIBs_GO) <- PIBs_GO[1, ]
+PIBs_GO <- PIBs_GO[-1, ]
+row.names(PIBs_GO) <- NULL
+```
+
+# Plotar mapa 
+
+```{r}
+library(miojoWebMap)
+# comentado para não baixar todas as vezes que rodar
+# download_shape('municipio')
+PIBs_GO %>% webMap('Valor', escala_cor = 'YlGn')
+```
+
