@@ -24,6 +24,9 @@ output: html_document
 ## fonte de dados - SICONFI
 
 library(RSelenium)
+library(httr)
+httr::set_config(config(ssl_verifypeer = 0L))
+
 chrome <- RSelenium::rsDriver(browser = 'chrome')
 chrome
 
@@ -59,4 +62,5 @@ input_tabela$sendKeysToElement(list(key = 'down_arrow'))
 
 
 captcha <- remDr$findElement(using = 'id', value = "formFinbra:captcha:captchaImage")
-
+linkdocaptcha <- captcha$getElementAttribute('src')
+GET(linkdocaptcha[[1]], write_disk("captura0001.png", overwrite = TRUE))
