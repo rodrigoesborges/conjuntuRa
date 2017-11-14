@@ -1,0 +1,22 @@
+2017-11-13-varias-infos-tabela-POLFISCAL-GO
+
+
+http://www.tesouro.fazenda.gov.br/en/demonstrativos-fiscais
+
+http://www.tesouro.fazenda.gov.br/pt_PT/indicadores-fiscais-e-de-endividamento
+
+http://www.tesourotransparente.gov.br/ckan/dataset?tags=Ajuste+Fiscal+de+Estados+DF+e+Munic%C3%ADpios
+
+Este deve ser o lugar com dados atualizados:
+
+https://siconfi.tesouro.gov.br/siconfi/index.jsf;jsessionid=ljYFzdsw9poZqIuRjnDL1w7g.node1
+
+fundamentos de xbrl
+https://siconfi.tesouro.gov.br/siconfi/pages/public/conteudo/conteudo.jsf?id=601
+
+
+https://github.com/fjuniorr/siconfi
+
+https://github.com/decryptr/decryptr
+
+https://github.com/dfalbel/captchaReceita2
