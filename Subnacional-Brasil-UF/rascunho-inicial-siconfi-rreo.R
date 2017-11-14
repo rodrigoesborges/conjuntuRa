@@ -29,7 +29,7 @@ chrome
 
 url <- 'https://siconfi.tesouro.gov.br/siconfi/pages/public/consulta_finbra_rreo/finbra_rreo_list.jsf'
 
-remDr <- phantom[['client']]
+remDr <- chrome[['client']]
 remDr$navigate(url)
 remDr$screenshot(file = tf <- tempfile(fileext = ".png"))
 
@@ -40,17 +40,23 @@ input_periodicidade <- remDr$findElement(using = 'id', value = "formFinbra:perio
 input_periodicidade$sendKeysToElement(list(key = 'down_arrow', key = 'down_arrow', key = 'down_arrow'))
 
 input_periodo <- remDr$findElement(using = 'id', value = "formFinbra:periodo_focus")
-input_periodo$sendKeysToElement(list(key = 'down_arrow', key = 'down_arrow', key = 'down_arrow'))
+input_periodo$sendKeysToElement(list(key = 'down_arrow', key = 'down_arrow', key = 'down_arrow', key = 'down_arrow'))
 
 input_escopo <- remDr$findElement(using = 'id', value = "formFinbra:escopo_focus")
-
-input_poderSelect <- remDr$findElement(using = 'id', value = "formFinbra:poderSelect_focus")
+input_escopo$sendKeysToElement(list(key = 'down_arrow')) 
+                                     
+                                     
+#input_poderSelect <- remDr$findElement(using = 'id', value = "formFinbra:poderSelect_focus")
 
 #
 
 input_anexo <- remDr$findElement(using = 'id', value = "formFinbra:anexo_focus")
+input_anexo$sendKeysToElement(list(key = 'down_arrow', key = 'down_arrow', key = 'down_arrow', key = 'down_arrow', key = 'down_arrow', key = 'down_arrow'))
 
 input_tabela <- remDr$findElement(using = 'id', value = "formFinbra:tabela_focus")
+#Seleciona Receitas Primária
+input_tabela$sendKeysToElement(list(key = 'down_arrow')) 
+
 
 captcha <- remDr$findElement(usign = 'id', value = "formFinbra:captcha:captchaImage")
 
