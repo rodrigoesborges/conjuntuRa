@@ -25,6 +25,7 @@ output: html_document
 
 library(RSelenium)
 library(httr)
+library(devtools)
 httr::set_config(config(ssl_verifypeer = 0L))
 
 chrome <- RSelenium::rsDriver(browser = 'chrome')
