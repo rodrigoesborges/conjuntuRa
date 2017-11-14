@@ -1,9 +1,9 @@
----
-title: "resultadoprimarioUFS"
-author: "Rodrigo Borges & Tomás Barcellos"
-date: "13 de novembro de 2017"
-output: html_document
----
+##---
+#title: "resultadoprimarioUFS"
+#author: "Rodrigo Borges & Tomás Barcellos"
+#date: "13 de novembro de 2017"
+#output: html_document
+##---
 # SICONFI:
 #   https://siconfi.tesouro.gov.br/siconfi/pages/public/consulta_finbra_rreo/finbra_rreo_list.jsf
 #   Exercício: último
