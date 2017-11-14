@@ -58,5 +58,5 @@ input_tabela <- remDr$findElement(using = 'id', value = "formFinbra:tabela_focus
 input_tabela$sendKeysToElement(list(key = 'down_arrow')) 
 
 
-captcha <- remDr$findElement(usign = 'id', value = "formFinbra:captcha:captchaImage")
+captcha <- remDr$findElement(using = 'id', value = "formFinbra:captcha:captchaImage")
 
