@@ -1,27 +1,39 @@
-# indicadores básicos de Mercado de Trabalho - Brasil
-# fontes - Dieese e IBGE
-# http://www.dieese.org.br/analiseped/mensalTabela/mensalpedmettab02.xls
-library('sidrar')
-library('ggplot2')
-library('tidyverse')
+library(dplyr)
+library(RSIDRA)
+library(ggplot2)
+library(scales)
+library(dynlm)
+library(tidyverse)
 
-# copiado da analisemacro
-tabela = get_sidra(api='/t/6381/n1/all/v/4099/p/all/d/v4099%201')
+#idioma portugues
+Sys.setlocale(category = "LC_TIME", locale = "pt_BR.UTF-8")
 
-times = seq(as.Date('2016-01-01'), as.Date('2018-06-01'), 
-            by='month')
+#coleta tabela da PNAD Contínua, variáveis Taxa de desocupação e subutilização - trim 4118
+desemprego <- API_SIDRA(6381,variavel = "4099" )
 
-desemprego = data.frame(time=times, desemprego=tail(tabela$Valor, 20))
+#transforma data para formato data com lubridate
+desemprego$data <- lubridate::as_date(paste(desemprego$`Trimestre Móvel (Código)`,"01"),"%Y%m%d")
 
-ggplot(desemprego, aes(x=time, y=desemprego))+
-  geom_line(size=.8, colour='darkblue')+
+desemprego <- select(desemprego, data, Variável, Valor)
+colnames(desemprego) <- c("data","indicador","valor")
+desemprego$indicador <- gsub("^Taxa composta .*$","Taxa de subutilização",desemprego$indicador)
+desemprego$indicador <- gsub("^Taxa de d.*$","Taxa de desocupação",desemprego$indicador)
+
+#plota em um gráfico básico com bolas, 
+# adaptado de https://analisemacro.com.br/economia/dados-macroeconomicos/baixando-dados-do-sidra-com-o-r-o-pacote-sidrar/
+
+ggplot(desemprego, aes(x = data, y = valor, color = indicador))+
+  theme_classic()+
+  geom_line(mapping = aes(x = data, y = valor, color = indicador))+
+  scale_fill_discrete (name="indicador")+
   scale_x_date(breaks = date_breaks("1 months"),
                labels = date_format("%b/%Y"))+
   theme(axis.text.x=element_text(angle=90, hjust=1))+
   geom_point(size=9, shape=21, colour="#1a476f", fill="white")+
-  geom_text(aes(label=round(desemprego,1)), size=3, 
+  geom_text(aes(label=round(valor,1)), size=3, 
             hjust=0.5, vjust=0.5, shape=21, colour="#1a476f")+
   xlab('')+ylab('%')+
   labs(title='Taxa de Desocupação PNAD Contínua',
        subtitle='População desocupada em relação à PEA',
-       caption='Fonte: conjuntuRa com dados do IBGE.')
+       caption='Fonte: conjuntuRa com dados do IBGE via pacote RSIDRA.')
+
