@@ -1,10 +1,8 @@
-library(dplyr)
-library(RSIDRA)
-library(ggplot2)
 library(scales)
-library(dynlm)
+library(RSIDRA)
 library(tidyverse)
 library(zoo)
+library(dynlm)
 library(tempdisagg)
 
 #coleta tabela da PNAD Contínua, variáveis Taxa de desocupação e subutilização - trim 4118
