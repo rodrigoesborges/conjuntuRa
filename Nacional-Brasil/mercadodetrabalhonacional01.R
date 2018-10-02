@@ -7,9 +7,6 @@ library(tidyverse)
 library(zoo)
 library(tempdisagg)
 
-#idioma portugues
-Sys.setlocale(category = "LC_TIME", locale = "pt_BR.UTF-8")
-
 #coleta tabela da PNAD Contínua, variáveis Taxa de desocupação e subutilização - trim 4118
 desemprego <- API_SIDRA(6381,variavel = "4099" )
 
