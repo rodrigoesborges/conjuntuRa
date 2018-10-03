@@ -1,6 +1,8 @@
 library(RSIDRA)
 library(tidyverse)
 
+# ----- PIB --------------------------------------------------------------------
+
 nomes_variaveis <- function(x) {
   switch (as.character(x), 
           "6564" = "Em relação ao trimestre anterior",
@@ -51,4 +53,41 @@ pib_corrente <- API_SIDRA(
 
 # Reproduz tabela VII.1 do boletim nº 11 UFMS/UEMS
 bind_rows(pib_variacao, pib_corrente)
+
+# ----- Produção Industrial ----------------------------------------------------
+pi_setores_mes <- API_SIDRA(
+  3653, 544, "129314,129315,129316,129337,129338,129340", variavel = "3139", 
+  periodo = "last4") %>% 
+  select(categoria = `Seções e atividades industriais (CNAE 2.0)`, 
+         mes = Mês, Valor) %>% 
+  mutate(categoria = str_remove(categoria, "^\\d+(\\.\\d+)? "),
+         mes = str_extract(mes, "\\w+")) %>% 
+  spread(mes, Valor)
+
+pi_setores_ano <- API_SIDRA(
+  3653, 544, "129314,129315,129316,129337,129338,129340", variavel = "3140", 
+  periodo = "last") %>% 
+  select(categoria = `Seções e atividades industriais (CNAE 2.0)`, 
+         `No Ano` = Valor) %>% 
+  mutate(categoria = str_remove(categoria, "^\\d+(\\.\\d+)? "))
+
+pi_setores <- left_join(pi_setores_mes, pi_setores_ano, "categoria")
+
+pi_categorias_mes <- API_SIDRA(
+  3651, 543, "129278,129283,129300,129301,129305", variavel = "3139", 
+  periodo = "last4") %>% 
+  select(categoria = `Grandes categorias econômicas`, mes = Mês, Valor) %>% 
+  mutate(categoria = str_remove(categoria, "^\\d+ "),
+         mes = str_extract(mes, "\\w+")) %>% 
+  spread(mes, Valor)
+pi_categorias_ano <- API_SIDRA(
+  3651, 543, "129278,129283,129300,129301,129305", variavel = "3140", 
+  periodo = "last") %>% 
+  select(categoria = `Grandes categorias econômicas`, `No Ano` = Valor) %>% 
+  mutate(categoria = str_remove(categoria, "^\\d+ "))
+
+pi_categorias <- left_join(pi_categorias_mes, pi_categorias_ano, "categoria")
+
+# Reproduz tabela VII.2 do boletim nº 11 UFMS/UEMS
+bind_rows(pi_setores, pi_categorias)
 
