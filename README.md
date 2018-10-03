@@ -42,4 +42,3 @@ Projeto para análise de conjuntura - inicialmente brasileira - com R
 2. Dívidas Externa Bruta (BCB)
 3. Reservas internacionais (BCB)
 4. Dívidas Externa Líquida (BCB)
-
