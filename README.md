@@ -33,9 +33,10 @@ Projeto para análise de conjuntura - inicialmente brasileira - com R
 
 ### Política Fiscal
 
-1. Resultado Primário do Goberno Central (STN e BCB)
-2. Dívida Líquida do Setor Público (STN)
-3. Composição da Dívida pública Mobiliária Federal (STN)
+1. Resultado Primário do Governo Central (STN e BCB)
+2. Resultado Primário e Nominal por Esfera (BCB)
+3. Dívida Líquida do Setor Público / S. P. Consolidado (STN e BCB)
+4. Composição da Dívida pública Mobiliária Federal (STN)
 
 ### Política Monetária
 
@@ -50,6 +51,10 @@ Projeto para análise de conjuntura - inicialmente brasileira - com R
 ### Setor Externo
 
 1. Balanço de Pagamentos (BCB)
-2. Dívidas Externa Bruta (BCB)
-3. Reservas internacionais (BCB)
-4. Dívidas Externa Líquida (BCB)
+2. Transações Correntes por Componente (BCB)
+3. Balança Comercial (BCB)
+4. Conta Cap. e Financeira por item (BCB) *
+5. Dívida Externa Bruta (BCB)
+6. Reservas internacionais (BCB)
+7. Dívidas Externa Líquida (BCB)
+8. Posição Internacional de Investimento - Passivo Externo (BCB)
