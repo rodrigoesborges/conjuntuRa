@@ -45,6 +45,7 @@ Projeto para análise de conjuntura - inicialmente brasileira - com R
 4. Condicionantes da Base Monetária (BCB)
 5. Saldo das Operações de Crédito no Sistema Financeiro (BCB)
 6. Endividamento por setor Institucional (BCB)
+7. Índice de Custo do Crédito (BCB)
 
 ### Setor Externo
 
