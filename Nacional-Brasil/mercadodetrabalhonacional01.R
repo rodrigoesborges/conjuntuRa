@@ -1,59 +1,44 @@
-library(dplyr)
-library(RSIDRA)
-library(ggplot2)
 library(scales)
-library(dynlm)
+library(RSIDRA)
 library(tidyverse)
 library(zoo)
+library(dynlm)
 library(tempdisagg)
 
-#idioma portugues
-Sys.setlocale(category = "LC_TIME", locale = "pt_BR.UTF-8")
+# coleta tabela da PNAD Contínua, variáveis Taxa de desocupação e subutilização - trim 4118
+desemprego <- API_SIDRA(6381, variavel = "4099") %>% 
+  transmute(data = as.Date(paste(`Trimestre Móvel (Código)`,"01"),"%Y%m%d"),
+            indicador = "Taxa de desocupação",
+            valor = Valor) %>% 
+  as_data_frame()
 
-#coleta tabela da PNAD Contínua, variáveis Taxa de desocupação e subutilização - trim 4118
-desemprego <- API_SIDRA(6381,variavel = "4099" )
+# baixa estimativas de desemprego total, ou taxa composta de subutilização, e desagrega mês a mês
+tab4099 <- API_SIDRA(4099, variavel = "4118") %>% 
+  transmute(data = as.Date(as.yearqtr(Trimestre, format = "%qº trimestre %Y")),
+            valor = Valor)
 
-#transforma data para formato data com lubridate
-desemprego$data <- as.Date(paste(desemprego$`Trimestre Móvel (Código)`,"01"),"%Y%m%d")
+subutilizacao <- tibble(
+  valor = predict(td(tab4099$valor ~ 1, "average", 3, "denton-cholette")),
+  indicador = "Taxa de subutilização"
+) %>% 
+  mutate(data = seq(min(tab4099$data), along.with = valor, by = "1 month"))
 
-desemprego <- select(desemprego, data, Variável, Valor)
-colnames(desemprego) <- c("data","indicador","desocupacao")
-desemprego$indicador <- gsub("^Taxa de d.*$","Taxa de desocupação",desemprego$indicador)
+dados <- bind_rows(subutilizacao, desemprego)
 
-desempregots <- ts(desemprego$desocupacao, start = c(2012,03), frequency = 12)
-
-#baixa estimativas de desemprego total, ou taxa composta de subutilização, e desagrega mês a mês
-subutilizacao <- API_SIDRA(4099, variavel = "4118")
-subutilizacao$data <- as.Date(as.yearqtr(subutilizacao$Trimestre, format = "%qº trimestre %Y"))
-subutilizacao <- select(subutilizacao, data, Variável, Valor)
-subutilizacao$Variável <- gsub("^Taxa composta .*$","Taxa de subutilização",subutilizacao$Variável)
-colnames(subutilizacao) <- c("data","indicador","subutilizacao")
-
-
-
-submensal <- predict(td(subutilizacao$subutilizacao ~ 1, method = "denton-cholette", conversion = "average", to = 3))
-
-subutilizacaom <- ts(submensal,start = c(2012,01), freq = 12)
-
-desempregos <- ts.intersect(desempregots,subutilizacaom)
-desempregos <- data.frame(valores = (as.matrix(desempregos)), data = as.Date(time(desempregos)))
-
-
-#plota em um gráfico básico com bolas, 
+# plota em um gráfico básico com bolas, 
 # adaptado de https://analisemacro.com.br/economia/dados-macroeconomicos/baixando-dados-do-sidra-com-o-r-o-pacote-sidrar/
 
-ggplot(desempregos, aes(x = data, y = valor, color = indicador))+
+ggplot(dados, aes(data, valor, color = indicador))+
   theme_classic()+
-  geom_line(mapping = aes(x = data, y = valor, color = indicador))+
+  geom_line(size = 1) +
+  geom_point(size = 9, shape = 21,fill = "white") +
+  geom_text(aes(label = round(valor, 1)), size = 3, color = "#1a476f",
+            hjust = 0.5, vjust = 0.5) +
   scale_fill_discrete (name="indicador")+
   scale_x_date(breaks = date_breaks("1 months"),
-               labels = date_format("%b/%Y"))+
-  theme(axis.text.x=element_text(angle=90, hjust=1))+
-  geom_point(size=9, shape=21, colour="#1a476f", fill="white")+
-  geom_text(aes(label=round(valor,1)), size=3, 
-            hjust=0.5, vjust=0.5, shape=21, colour="#1a476f")+
-  xlab('')+ylab('%')+
-  labs(title='Taxa de Desocupação PNAD Contínua',
+               labels = date_format("%b/%Y")) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  labs(x = "", y = "%", title='Taxa de Desocupação PNAD Contínua',
        subtitle='População desocupada em relação à PEA',
        caption='Fonte: conjuntuRa com dados do IBGE via pacote RSIDRA.')
 
