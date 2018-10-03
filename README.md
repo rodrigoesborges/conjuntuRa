@@ -3,10 +3,15 @@ Projeto para análise de conjuntura - inicialmente brasileira - com R
 
 ## Indicadores visados pelo projeto
 
+## NÍVEL NACIONAL
 ### Nível de atividade
 
-1. variação do PIB (IBGE)
-2. variação da Produção Física Industrial (IBGE)
+1. variação do PIB - S. Institucional (IBGE)
+2. Variação do PIB - Setorial (IBGE)
+3. Variação da Produção Física Industrial - Grandes categorias (IBGE)
+4. Variação da P. Industrial - seções/atividades
+5. Volume de Vendas no Comércio (IBGE)
+6. Variação no volume de Serviços (IBGE)
 
 ### Inflação
 
@@ -20,9 +25,9 @@ Projeto para análise de conjuntura - inicialmente brasileira - com R
 
 ### Mercado de trabalho
 
-1. Taxa de desocupação (IBGE)
-2. Taxa de desemprego (IBGE)
-3. Taxa de desemprego (DIEESE)
+1. Taxa de desemprego (IBGE)
+2. Taxa de desemprego total - subutilização (IBGE)
+3. Taxa de desemprego - Aberto e Total (DIEESE)
 4. Saldo de Admissões e Desligamentos (CAGED)
  
 
