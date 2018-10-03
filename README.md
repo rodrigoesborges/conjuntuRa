@@ -12,6 +12,11 @@ Projeto para análise de conjuntura - inicialmente brasileira - com R
 
 1. IPCA índice geral (IBGE)
 2. Componentes do IPCA (IBGE)
+3. INPC (IBGE)
+4. IGP-DI (FGV)
+5. IGP-DI desagregado (FGV)
+6. ICV (DIEESE)
+7. Cesta básica - componentes (DIEESE)
 
 ### Mercado de trabalho
 
