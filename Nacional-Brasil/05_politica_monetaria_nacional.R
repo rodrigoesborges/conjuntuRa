@@ -1,6 +1,12 @@
 library(rbcb)
 library(tidyverse)
 
+incluir_indicador <- function(df) {
+  df$indicador <- names(df)[2]
+  names(df)[2] <- "valor"
+  df[ , c(1, 3, 2)]
+}
+
 # ----- Base Monetária, Meio de pagamento (M1 a M4) e componentes --------------
 meios_pag <- get_series(
   c(emitido = 1786, reservas = 1787, base = 1788,
@@ -9,11 +15,6 @@ meios_pag <- get_series(
     quotas = 27811, ope_compromisso = 27812, M3 = 27813,
     titulo_fed = 27814, M4 = 27815), last = 13
   )
-incluir_indicador <- function(df) {
-  df$indicador <- names(df)[2]
-  names(df)[2] <- "valor"
-  df[ , c(1, 3, 2)]
-}
 
 tabela_mp <- map_df(meios_pag, incluir_indicador)
 
@@ -72,7 +73,23 @@ tabela_cond
 
 
 # ----- Endividamento por setor Institucional ----------------------------------
+endividamento <- get_series(
+  c("Ao Setor Público" = 17466, "Ao Setor Privado" = 17473,
+    "Ao Setor Privado Industrial" = 17467, "Ao Setor de Habitação" = 21245,
+    "Ao Setor rural" = 17469, "Ao Setor Comercial" = 17470, 
+    "Pessoas Físicas" = 17471, "Crédito Total do Sist. Financeiro" = 20622,
+    "Créd. do Sist. Fin. Privado Nacional" = 21301, 
+    "Créd. do Sist. Fin. Estrangeiro" = 21302), 
+  last = 16
+)
 
+tab_endiv <- map_df(endividamento, incluir_indicador) %>% 
+  filter(date %in% sort(unique(date))[c(1, 4, 13:16)]) %>% 
+  mutate(date = format(date, "%b %Y")) %>% 
+  spread(date, valor)
+
+# Reproduz a tabela XI.4
+tab_endiv
 
 
 
