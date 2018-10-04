@@ -66,6 +66,10 @@ dashboardPage(
           tabPanel("Gráfico", plotlyOutput("graf_selic")),
           tabPanel("Tabela", dataTableOutput("tab_selic")), 
           title = "Selic"
+        ),
+        tabBox(
+          tabPanel("Tabela", dataTableOutput("tab_creditosetorial")), 
+          title = "Crédito Setorial"
         )
       )
     )

@@ -130,4 +130,32 @@ function(input, output, session) {
     options = list(pageLength = 10)
   )
   
+  # --
+  
+  creditosetorial_ <- reactive({
+    creditosetorial %>% 
+      filter(between(date, input$periodo[1], input$periodo[2]))
+  })
+  
+  output$graf_creditosetorial <- renderPlotly({
+    creditosetorial <- creditosetorial_()
+    
+    dif_tempo <- diff(range(div$date))
+    intervalo <- ifelse(dif_tempo < 500, "1 month",
+                        ifelse(dif_tempo < 1000, "2 months", "1 year"))
+    
+    ggplot(div, aes(date, valor, col = indicador)) +
+      geom_line(size = 1) +
+      scale_x_date("", date_breaks = intervalo, date_labels = "%b / %Y") +
+      scale_y_continuous("") +
+      ggtitle("Crédito Setorial")
+    
+    ggplotly()
+  })
+  
+  output$tab_creditosetorial <- renderDataTable({
+    mutate(creditosetorial_(), date = format(date, "%d/%m/%Y")) %>% 
+      spread(indicador, valor)
+  }, options = list(pageLength = 10))
+  
 }
