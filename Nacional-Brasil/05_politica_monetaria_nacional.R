@@ -18,7 +18,7 @@ meios_pag <- get_series(
     "Base Monetária" = 1788, "Moeda em Poder do Público" = 27789, 
     "Depósitos à Vista" = 27790, "M1" = 27791,
     "Depósitos de poupança" = 1835, "Títulos privados" = 27809, "M2" = 27810,
-    "Quotas dis fybdis de renda fixa" = 27811,
+    "Quotas dos fundos de renda fixa" = 27811,
     "Op. Compromisso c/ tit. Fed." = 27812, "M3" = 27813,
     "Título Fed. (SELIC)" = 27814, M4 = 27815),
   "1994-01-01"
