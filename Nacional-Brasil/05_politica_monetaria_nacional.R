@@ -83,6 +83,52 @@ condicionantes %>%
   spread(date, valor)
 
 # ----- Saldo das Operações de Crédito no Sistema Financeiro -------------------
+creditosetorial <- get_series (
+  c("Agropecuária" = 22027, "Indústria Extrativa" = 22028,
+    "Indústria de Transformação" = 22029, "Indústria de construção" = 22030,
+    "Serv. Ind. de Util. Púb." = 22034, "Comércio" = 22036, 
+    "Transportes" = 22037, "Administração Pública" = 22039,
+    "Outros serviços" = 22041, 
+    "Outros" = 22042,
+    "Indústria total" = 22043,
+    "Serviços total" = 22044,
+    "Ind. Química e farmacêutica" = 27722,
+    "Ind. Bens de Capital" = 27723,
+    "Ind. automobilística" = 27724,
+    "Ind. de obras de infraestrutura" = 27725,
+    "Ind. outros bens de cons. duráveis" = 27726,
+    "Ind. de embalagens" = 27727,
+    "Ind. bens de consumo não duráveis" = 27728,
+    "Via terrestre - carga e passageiro" = 27729,
+    "Aquaviário e aéreo" = 27730,
+    "Dutoviário" = 27731,
+    "Varejo - não duráveis" = 27732,
+    "Varejo - duráveis" = 27734,
+    "Com. Geral - veículos automotores" = 27735,
+    "Com. Geral - bens intermediários" = 27736,
+    "Com. Geral - bens de capital" = 27737,
+    "Serviços imobiliários" = 27738,
+    "Serv. Informação e Comunicação" = 27739,
+    "Demais serviços às famílias" = 27740,
+    "Demais serviços às empresas" = 27741,
+    "Serviços financeiros" = 27742,
+    "Ind. de Alimentos" = 27743,
+    "Ind. de açúcar" = 27744,
+    "Ind. têxtil, vestuário, couro e calçados" = 27745,
+    "Ind. de papel e celulose" = 27746,
+    "Ind. de petróleo, gás e álcool" = 27747,
+    "Ind. de metalurgia e siderurgia" = 27748,
+    "Ind. de mineração" = 27749), 
+  "2012-01-01"
+) %>% map_df(incluir_indicador) 
+
+write_csv(creditosetorial, "data/creditosetorial.csv")
+
+# Reproduz a tabela XI.3
+creditosetorial %>% 
+  filter(date %in% ultimos(date, c(1, 10:13))) %>% 
+  mutate(date = format(date, "%b %Y")) %>% 
+  spread(date, valor)
 
 
 # ----- Endividamento por setor Institucional ----------------------------------
