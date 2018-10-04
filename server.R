@@ -1,0 +1,133 @@
+function(input, output, session) {
+  observeEvent(input$ir_atividade, {
+    shiny::updateTabsetPanel(session, "menu", "atividade")
+  })
+  
+  observeEvent(input$ir_inflacao, {
+    shiny::updateTabsetPanel(session, "menu", "inflacao")
+  })
+  
+  observeEvent(input$ir_trabalho, {
+    shiny::updateTabsetPanel(session, "menu", "trabalho")
+  })
+  
+  observeEvent(input$ir_fiscal, {
+    shiny::updateTabsetPanel(session, "menu", "fiscal")
+  })
+  
+  observeEvent(input$ir_monetaria, {
+    shiny::updateTabsetPanel(session, "menu", "monetaria")
+  })
+  
+  mp_ <- reactive({
+    meio_pagamento %>% 
+      filter(between(date, input$periodo[1], input$periodo[2]))
+  })
+  
+  output$graf_mp <- renderPlotly({
+    mp <- mp_()
+    
+    dif_tempo <- diff(range(mp$date))
+    intervalo <- ifelse(dif_tempo < 500, "1 month",
+                        ifelse(dif_tempo < 1000, "2 months", "1 year"))
+    
+    ggplot(mp, aes(date, valor, col = indicador)) +
+      geom_line(size = 1) +
+      scale_x_date("", date_breaks = intervalo, date_labels = "%b / %Y") +
+      scale_y_continuous("") +
+      ggtitle("Meios de pagamentos")
+    
+    ggplotly()
+  })
+  
+  output$tab_mp <- renderDataTable({
+    mutate(mp_(), date = format(date, "%d/%m/%Y")) %>% 
+      spread(indicador, valor)
+  }, options = list(pageLength = 10))
+  
+  # --
+  
+  cond_ <- reactive({
+    condicionantes %>% 
+      filter(between(date, input$periodo[1], input$periodo[2]))
+  })
+  
+  output$graf_cond <- renderPlotly({
+    cond <- cond_()
+    
+    dif_tempo <- diff(range(cond$date))
+    intervalo <- ifelse(dif_tempo < 500, "1 month",
+                        ifelse(dif_tempo < 1000, "2 months", "1 year"))
+    
+    ggplot(cond, aes(date, valor, col = indicador)) +
+      geom_line(size = 1) +
+      scale_x_date("", date_breaks = intervalo, date_labels = "%b / %Y") +
+      scale_y_continuous("") +
+      ggtitle("Condicionantes")
+    
+    ggplotly()
+  })
+  
+  output$tab_cond <- renderDataTable({
+    mutate(cond_(), date = format(date, "%d/%m/%Y")) %>% 
+      spread(indicador, valor)
+  }, options = list(pageLength = 10))
+  
+  # --
+  
+  div_ <- reactive({
+    endividamento %>% 
+      filter(between(date, input$periodo[1], input$periodo[2]))
+  })
+  
+  output$graf_div <- renderPlotly({
+    div <- div_()
+    
+    dif_tempo <- diff(range(div$date))
+    intervalo <- ifelse(dif_tempo < 500, "1 month",
+                        ifelse(dif_tempo < 1000, "2 months", "1 year"))
+    
+    ggplot(div, aes(date, valor, col = indicador)) +
+      geom_line(size = 1) +
+      scale_x_date("", date_breaks = intervalo, date_labels = "%b / %Y") +
+      scale_y_continuous("") +
+      ggtitle("Condicionantes")
+    
+    ggplotly()
+  })
+  
+  output$tab_div <- renderDataTable({
+    mutate(div_(), date = format(date, "%d/%m/%Y")) %>% 
+      spread(indicador, valor)
+  }, options = list(pageLength = 10))
+  
+  # --
+  
+  selic_ <- reactive({
+    selic %>% 
+      filter(between(date, input$periodo[1], input$periodo[2]))
+  })
+  
+  output$graf_selic <- renderPlotly({
+    selic <- selic_()
+    
+    dif_tempo <- diff(range(selic$date))
+    intervalo <- ifelse(dif_tempo < 500, "1 month",
+                        ifelse(dif_tempo < 1000, "2 months", "1 year"))
+    
+    ggplot(selic, aes(date, SELIC)) +
+      geom_line(col = "purple4", size = 2) +
+      scale_x_date("", date_breaks = intervalo, date_labels = "%b / %Y") +
+      scale_y_continuous("", limits = range(selic$SELIC) + c(-0.3, 0.1), 
+                         labels = function(x) paste(x, "%") ) +
+      ggtitle("Gráfico XI-A: Taxa Over/SELIC (% anualizada)")
+    
+    ggplotly()
+  })
+  
+  output$tab_selic <- renderDataTable(
+    mutate(selic_(), date = format(date, "%d/%m/%Y")),
+    options = list(pageLength = 10)
+  )
+  
+}
