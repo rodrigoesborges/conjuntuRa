@@ -7,41 +7,54 @@ incluir_indicador <- function(df) {
   df[ , c(1, 3, 2)]
 }
 
+ultimos <- function(x, ids) {
+  unicos <- unique(x)
+  sort(unicos)[length(unicos) + ids - max(ids)]
+}
+
 # ----- Base Monetária, Meio de pagamento (M1 a M4) e componentes --------------
 meios_pag <- get_series(
-  c(emitido = 1786, reservas = 1787, base = 1788,
-    poder_publico = 27789, dep_vista = 27790, M1 = 27791,
-    dep_poupanca = 1835, tit_privados = 27809, M2 = 27810,
-    quotas = 27811, ope_compromisso = 27812, M3 = 27813,
-    titulo_fed = 27814, M4 = 27815), last = 13
-  )
+  c("Papel Moeda Emitido" = 1786, "Reservas Bancárias" = 1787, 
+    "Base Monetária" = 1788, "Moeda em Poder do Público" = 27789, 
+    "Depósitos à Vista" = 27790, "M1" = 27791,
+    "Depósitos de poupança" = 1835, "Títulos privados" = 27809, "M2" = 27810,
+    "Quotas dis fybdis de renda fixa" = 27811,
+    "Op. Compromisso c/ tit. Fed." = 27812, "M3" = 27813,
+    "Título Fed. (SELIC)" = 27814, M4 = 27815),
+  "1994-01-01"
+  ) %>% 
+  map_df(incluir_indicador)
 
-tabela_mp <- map_df(meios_pag, incluir_indicador)
+write_csv(meios_pag, "data/meio_pagamento.csv")
 
-meses <- tabela_mp %>% 
-  filter(date %in% sort(unique(date))[c(1, 10:13)]) %>% 
+meses <- meios_pag %>% 
+  filter(date %in% ultimos(date, c(1, 10:13))) %>% 
   mutate(date = format(date, "%b %Y")) %>% 
   spread(date, valor)
 
-var_mes <- tabela_mp %>% group_by(indicador) %>% 
+var_mes <- meios_pag %>% 
+  group_by(indicador) %>% 
   summarise(`No mês` = (valor[13] - valor[12]) * 100 / valor[12])
 
-var_ano <- tabela_mp %>% group_by(indicador) %>% 
+var_ano <- meios_pag %>% 
+  group_by(indicador) %>% 
   summarise(`No ano` = (last(valor) - first(valor)) * 100 / first(valor))
 
 # Reproduz a tabela XI.1
 left_join(meses, var_mes, "indicador") %>% 
   left_join(var_ano, "indicador")
 
-
 # ----- Taxa Over/SELIC --------------------------------------------------------
-selic <- get_series(c(SELIC = 1178), last = 252)
+selic <- get_series(c(SELIC = 1178), start_date = "1999-01-01")
+
+write_csv(selic, "data/selic.csv")
 
 # reproduz o gráfico XI-A
-ggplot(selic, aes(date, SELIC)) +
+selic2 <- filter(selic, date %in% ultimos(date, 1:252))
+ggplot(selic2, aes(date, SELIC)) +
   geom_line(col = "purple4", size = 2) +
   scale_x_date("", date_breaks = "1 month", date_labels = "%b / %Y") +
-  scale_y_continuous("", limits = range(selic$SELIC) + c(-0.3, 0.1), 
+  scale_y_continuous("", limits = range(selic2$SELIC) + c(-0.3, 0.1), 
                      labels = function(x) paste(x, "%") ) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 30, size = 10),
@@ -57,17 +70,17 @@ condicionantes <- get_series(
     "Setor externo" = 1811, "Dep. de instituições financeiras" = 1815,
     "Tít. púb. fed. - BC" = 7528,
     "Redesconto" = 12484, "Derivativos" = 12487,
-    "Outras contas" = 7537, "Variação da base ampliada" = 7541), 
-  last = 13
-)
+    "Outras contas" = 7537, "Variação da base ampliada" = 7541),
+  "1994-01-01"
+) %>% map_df(incluir_indicador) 
 
-tabela_cond <- map_df(condicionantes, incluir_indicador) %>% 
-  filter(date %in% sort(unique(date))[c(1, 10:13)]) %>% 
-  mutate(date = format(date, "%b %Y")) %>% 
-  spread(date, valor)
+write_csv(condicionantes, "data/condicionantes.csv")
 
 # Reproduz a tabela XI.2
-tabela_cond
+condicionantes %>% 
+  filter(date %in% ultimos(date, c(1, 10:13))) %>% 
+  mutate(date = format(date, "%b %Y")) %>% 
+  spread(date, valor)
 
 # ----- Saldo das Operações de Crédito no Sistema Financeiro -------------------
 
@@ -80,16 +93,14 @@ endividamento <- get_series(
     "Pessoas Físicas" = 17471, "Crédito Total do Sist. Financeiro" = 20622,
     "Créd. do Sist. Fin. Privado Nacional" = 21301, 
     "Créd. do Sist. Fin. Estrangeiro" = 21302), 
-  last = 16
-)
+  "1994-01-01"
+) %>% map_df(incluir_indicador) 
 
-tab_endiv <- map_df(endividamento, incluir_indicador) %>% 
-  filter(date %in% sort(unique(date))[c(1, 4, 13:16)]) %>% 
-  mutate(date = format(date, "%b %Y")) %>% 
-  spread(date, valor)
+write_csv(endividamento, "data/endividamento.csv")
 
 # Reproduz a tabela XI.4
-tab_endiv
-
-
+endividamento %>% 
+  filter(date %in% ultimos(date, c(1, 4, 13:16))) %>% 
+  mutate(date = format(date, "%b %Y")) %>% 
+  spread(date, valor)
 
