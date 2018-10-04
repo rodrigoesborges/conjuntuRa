@@ -1,7 +1,7 @@
 library(rbcb)
 library(tidyverse)
 
-# ----- Base Monetária e componentes -------------------------------------------
+# ----- Base Monetária, Meio de pagamento (M1 a M4) e componentes --------------
 meios_pag <- get_series(
   c(emitido = 1786, reservas = 1787, base = 1788,
     poder_publico = 27789, dep_vista = 27790, M1 = 27791,
@@ -31,9 +31,6 @@ var_ano <- tabela_mp %>% group_by(indicador) %>%
 # Reproduz a tabela XI.1
 left_join(meses, var_mes, "indicador") %>% 
   left_join(var_ano, "indicador")
-
-
-# ----- Meio de pagamento (M1 a M4) e componentes ------------------------------
 
 
 # ----- Taxa Over/SELIC --------------------------------------------------------

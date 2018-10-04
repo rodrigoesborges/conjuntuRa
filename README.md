@@ -17,11 +17,11 @@ Projeto para análise de conjuntura - inicialmente brasileira - com R
 
 - [x] IPCA índice geral (IBGE)
 - [x] Componentes do IPCA (IBGE)
-- [ ] 3. INPC (IBGE)
-- [ ] 4. IGP-DI (FGV)
-- [ ] 5. IGP-DI desagregado (FGV)
-- [ ] 6. ICV (DIEESE)
-- [ ] 7. Cesta básica - componentes (DIEESE)
+- [ ] INPC (IBGE)
+- [ ] IGP-DI (FGV)
+- [ ] IGP-DI desagregado (FGV)
+- [ ] ICV (DIEESE)
+- [ ] Cesta básica - componentes (DIEESE)
 
 
 ### Mercado de trabalho
@@ -33,28 +33,27 @@ Projeto para análise de conjuntura - inicialmente brasileira - com R
 
 ### Política Fiscal
 
-- [ ] 1. Resultado Primário do Governo Central (STN e BCB)
-- [ ] 2. Resultado Primário e Nominal por Esfera (BCB)
-- [ ] 3. Dívida Líquida do Setor Público / S. P. Consolidado (STN e BCB)
-- [ ] 4. Composição da Dívida pública Mobiliária Federal (STN)
+- [ ] Resultado Primário do Governo Central (STN e BCB)
+- [ ] Resultado Primário e Nominal por Esfera (BCB)
+- [ ] Dívida Líquida do Setor Público / S. P. Consolidado (STN e BCB)
+- [ ] Composição da Dívida pública Mobiliária Federal (STN)
 
 ### Política Monetária
 
-- [x] 1. Base Monetária  e componentes (BCB)
-- [x] 2. Meios de pagamento (M1 a M4) e componentes (BCB)
-- [x] 3. Taxa Over/SELIC (BCB)
-- [x] 4. Condicionantes da Base Monetária (BCB)
-- [ ] 5. Saldo das Operações de Crédito no Sistema Financeiro (BCB)
-- [ ] 6. Endividamento por setor Institucional (BCB)
-- [ ] 7. Índice de Custo do Crédito (BCB)
+- [x] Base Monetária, Meios de pagamento (M1 a M4) e componentes (BCB)
+- [x] Taxa Over/SELIC (BCB)
+- [x] Condicionantes da Base Monetária (BCB)
+- [ ] Saldo das Operações de Crédito no Sistema Financeiro (BCB)
+- [ ] Endividamento por setor Institucional (BCB)
+- [ ] Índice de Custo do Crédito (BCB)
 
 ### Setor Externo
 
-- [ ] 1. Balanço de Pagamentos (BCB)
-- [ ] 2. Transações Correntes por Componente (BCB)
-- [ ] 3. Balança Comercial (BCB)
-- [ ] 4. Conta Cap. e Financeira por item (BCB) *
-- [ ] 5. Dívida Externa Bruta (BCB)
-- [ ] 6. Reservas internacionais (BCB)
-- [ ] 7. Dívida Externa Líquida (BCB)
-- [ ] 8. Posição Internacional de Investimento - Passivo Externo (BCB)
+- [ ] Balanço de Pagamentos (BCB)
+- [ ] Transações Correntes por Componente (BCB)
+- [ ] Balança Comercial (BCB)
+- [ ] Conta Cap. e Financeira por item (BCB) *
+- [ ] Dívida Externa Bruta (BCB)
+- [ ] Reservas internacionais (BCB)
+- [ ] Dívida Externa Líquida (BCB)
+- [ ] Posição Internacional de Investimento - Passivo Externo (BCB)
