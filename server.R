@@ -43,7 +43,7 @@ function(input, output, session) {
   output$tab_mp <- renderDataTable({
     mutate(mp_(), date = format(date, "%d/%m/%Y")) %>% 
       spread(indicador, valor)
-  }, options = list(pageLength = 10))
+  }, options = list(pageLength = 10, scrollX = TRUE))
   
   # --
   
@@ -71,7 +71,7 @@ function(input, output, session) {
   output$tab_cond <- renderDataTable({
     mutate(cond_(), date = format(date, "%d/%m/%Y")) %>% 
       spread(indicador, valor)
-  }, options = list(pageLength = 10))
+  }, options = list(pageLength = 10, scrollX = TRUE))
   
   # --
   
@@ -99,7 +99,7 @@ function(input, output, session) {
   output$tab_div <- renderDataTable({
     mutate(div_(), date = format(date, "%d/%m/%Y")) %>% 
       spread(indicador, valor)
-  }, options = list(pageLength = 10))
+  }, options = list(pageLength = 10, scrollX = TRUE))
   
   # --
   
@@ -127,7 +127,7 @@ function(input, output, session) {
   
   output$tab_selic <- renderDataTable(
     mutate(selic_(), date = format(date, "%d/%m/%Y")),
-    options = list(pageLength = 10)
+    options = list(pageLength = 10, scrollX = TRUE)
   )
   
   # --
@@ -156,6 +156,6 @@ function(input, output, session) {
   output$tab_creditosetorial <- renderDataTable({
     mutate(creditosetorial_(), date = format(date, "%d/%m/%Y")) %>% 
       spread(indicador, valor)
-  }, options = list(pageLength = 10))
+  }, options = list(pageLength = 10, scrollX = TRUE))
   
 }

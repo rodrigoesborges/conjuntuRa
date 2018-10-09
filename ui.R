@@ -69,7 +69,7 @@ dashboardPage(
         ),
         tabBox(
           tabPanel("Tabela", dataTableOutput("tab_creditosetorial")), 
-          title = "Crédito Setorial"
+          title = "Crédito Setorial", width = 12
         )
       )
     )
