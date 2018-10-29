@@ -1,6 +1,10 @@
 library(microdadosBrasil)
 library(readr)
+diretoriodoprojeto <- getwd()
 setwd("~/RLocalData")
+
+#ideal em seguida: procurar no csv anos que faltem,
+#do mais recente para trás, e só atualizar o csv com anos faltantes
 
 anos <- seq(2008,2017,1)
 ufs <- c("AC","AL","AM","AP","BA","CE", "DF", "ES", "GO", "MA","MG","MS","MT","PA","PB","PE","PR","RJ","RO","RR","RS","SC","SE","SP","TO")
@@ -29,7 +33,9 @@ for (uf in ufs) {
 }
 }
 
-write.csv2(proxysuper,"seriesuperexp.csv")
+
+setwd(diretoriodoprojeto)
+write.csv2(proxysuper,"data/seriesuperexp.csv")
 
 
 
