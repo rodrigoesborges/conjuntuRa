@@ -12,6 +12,8 @@ desemprego <- API_SIDRA(6381, variavel = "4099") %>%
             valor = Valor) %>% 
   as_data_frame()
 
+write.csv(desemprego,"data/03-01-desemprego-IBGE.csv")
+
 # baixa estimativas de desemprego total, ou taxa composta de subutilização, e desagrega mês a mês
 tab4099 <- API_SIDRA(4099, variavel = "4118") %>% 
   transmute(data = as.Date(as.yearqtr(Trimestre, format = "%qº trimestre %Y")),
@@ -23,7 +25,9 @@ subutilizacao <- tibble(
 ) %>% 
   mutate(data = seq(min(tab4099$data), along.with = valor, by = "1 month"))
 
+write.csv(subutilizacao,"data/03-02-subutilizacao.csv")
 dados <- bind_rows(subutilizacao, desemprego)
+
 
 # plota em um gráfico básico com bolas, 
 # adaptado de https://analisemacro.com.br/economia/dados-macroeconomicos/baixando-dados-do-sidra-com-o-r-o-pacote-sidrar/
