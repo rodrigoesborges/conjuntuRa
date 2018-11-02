@@ -34,13 +34,14 @@ for (uf in ufs) {
   novovalor <- data.frame(ano, uf, divisao,superexp,nrow(raisocupas))
   names(novovalor) <- nomescols
   proxysuper <- rbind(proxysuper,novovalor)
+  write.csv(proxysuper,paste0("seriesuperexp",anos[1],ano,".csv"))
 }
 }
 }
 
 
 setwd(diretoriodoprojeto)
-write.csv2(proxysuper,paste0("data/seriesuperexp",anos[1],"- 2017.csv"))
+write.csv(proxysuper,paste0("data/seriesuperexp",anos[1],"- 2017.csv"))
 
 
 
