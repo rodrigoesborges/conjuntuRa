@@ -22,7 +22,8 @@ colnames(proxysuper) <-nomescols
 
 for (ano in anos) {
   for (uf in ufs) {
-    rais <- read_RAIS("vinculos", i = ano, UF = uf, root_path = "~/RLocalData/")
+    rais <- try(read_RAIS("vinculos", i = ano, UF = uf, root_path = "~/RLocalData/"))
+    if (inherits(rais,"try-error")) next
     rais$"CNAE 95 Classe" <- sprintf("%05d",rais$"CNAE 95 Classe")
     for (divisao in divisoes){
       linhas <- substr(rais$"CNAE 95 Classe",1,2) == divisao
@@ -42,8 +43,7 @@ for (ano in anos) {
 }
 
 
-setwd(diretoriodoprojeto)
-write.csv(proxysuper,paste0("data/seriesuperexp",anos[1],"- 2017.csv"))
+write.csv(proxysuper,paste0("data/seriesuperexp",anos[1],uf,ano,".csv"))
 
 
 
