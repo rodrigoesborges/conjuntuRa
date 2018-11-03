@@ -38,7 +38,7 @@ for (ano in anos) {
       names(novovalor) <- nomescols
       proxysuper <- rbind(proxysuper,novovalor)
     }
-    write.csv(proxysuper,paste0("seriesuperexp",anos[1],ano,".csv"))
+    write.csv(proxysuper,paste0("data/seriesuperexp",anos[1],ano,".csv"))
   }
 }
 
