@@ -24,7 +24,7 @@ for (ano in anos) {
   for (uf in ufs) {
     rais <- try(read_RAIS("vinculos", i = ano, UF = uf, root_path = "~/RLocalData/"))
     if (inherits(rais,"try-error")) next
-    rais$"CNAE 95 Classe" <- sprintf("%05d",rais$"CNAE 95 Classe")
+    rais$"CNAE 95 Classe" <- sprintf("%05d",parse_number(rais$"CNAE 95 Classe"))
     for (divisao in divisoes){
       linhas <- substr(rais$"CNAE 95 Classe",1,2) == divisao
       raisocupas <- rais[linhas,]
