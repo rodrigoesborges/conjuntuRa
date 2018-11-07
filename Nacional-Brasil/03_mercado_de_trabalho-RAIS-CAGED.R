@@ -12,7 +12,7 @@ divisoes <- sprintf("%02d",CNAE95$"Código")
 
 anos <- seq(1994,2017,1)
 ufs <- c("AC","AL","AM","AP","BA","CE", "DF", "ES", "GO", "MA","MG","MS","MT","PA","PB","PE","PI","PR","RN","RJ","RO","RR","RS","SC","SE","SP","TO")
-#ufs <- "SP"
+
 nomescols <- c("ano","uf","divisao","percentual","vinculos")
 
 proxysuper <- data.frame(matrix(ncol = 5, nrow = 0))
