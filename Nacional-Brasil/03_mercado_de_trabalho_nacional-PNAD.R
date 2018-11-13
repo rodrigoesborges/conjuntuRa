@@ -5,31 +5,37 @@ require(readxl)
 require(dplyr)
 require(plotly)
 
-anos <- seq(1994,2017,1)
-ufs <- c("AC","AL","AM","AP","BA","CE", "DF", "ES", "GO", "MA","MG","MS","MT","PA","PB","PE","PI","PR","RN","RJ","RO","RR","RS","SC","SE","SOP","TO")
+anos <- seq(1995,2015,1)
+sempnad <- c(2000,2001,2009,2010)
+
+for (s in sempnad) {
+anos <- anos[anos != s]
+}
+
 
 nomescols <- c("ano","uf","divisao","percentual","vinculos")
 
 proxysuper <- data.frame(matrix(ncol = 5, nrow = 0))
 colnames(proxysuper) <-nomescols
 
+teste <- read_PNAD("pessoas", i = 1995, root_path = "~/RLocalData/PNAD/1995/DADOS
+                   ")
+
 for (ano in anos) {
-  for (uf in ufs) {
-    rais <- read_RAIS("vinculos", i = ano, UF = uf, root_path = "~/RLocalData/RAIS", vars_subset = c("CNAE 95 Classe","Faixa Remun M\xe9dia (SM)"))
-    raisocupas <- rais
-    raisocupas$"Faixa Remun M\xe9dia (SM)" <- as.numeric(raisocupas$"Faixa Remun M\xe9dia (SM)")
-    seden <- nrow(raisocupas)
-    if (nrow(raisocupas) == 0) { seden = 1 }
-    raissuper <- raisocupas[ raisocupas$"Faixa Remun M\xe9dia (SM)" <= 3]
-    senum <- nrow(raissuper)
-    superexp <- senum/seden
-    novovalor <- data.frame(ano, uf, divisao,superexp,nrow(raisocupas))
-    names(novovalor) <- nomescols
-    proxysuper <- rbind(proxysuper,novovalor)
-    write.csv2(proxysuper,paste0("data/serie2sm",anos[1],"-",ano,".csv"))
-    gc()
-  }
+    #pnad <- read_PNAD("pessoas", i = ano, root_path = "~/RLocalData/PNAD"))
+    # pnadocupas <- pnad
+    # pnadocupas$"Faixa Remun M\xe9dia (SM)" <- as.numeric(pnadocupas$"Faixa Remun M\xe9dia (SM)")
+    # seden <- nrow(pnadocupas)
+    # if (nrow(pnadocupas) == 0) { seden = 1 }
+    # pnadsuper <- pnadocupas[ pnadocupas$"Faixa Remun M\xe9dia (SM)" <= 3]
+    # senum <- nrow(pnadsuper)
+    # superexp <- senum/seden
+    # novovalor <- data.frame(ano, uf, divisao,superexp,nrow(pnadocupas))
+    # names(novovalor) <- nomescols
+    # proxysuper <- rbind(proxysuper,novovalor)
+    # write.csv2(proxysuper,paste0("data/serie2sm",anos[1],"-",ano,".csv"))
+    # gc()
 }
 
-write.csv2(proxysuper,paste0("data/serie2sm",anos[1],"-",ano,".csv"))
+write.csv2(proxysuper,paste0("data/serie2smPNAD",anos[1],"-",ano,".csv"))
 
