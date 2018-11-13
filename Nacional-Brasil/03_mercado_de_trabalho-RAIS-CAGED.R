@@ -1,7 +1,8 @@
-library(microdadosBrasil)
-library(readr)
-library(readxl)
-library(dplyr)
+require(microdadosBrasil)
+require(data.table)
+require(readr)
+require(readxl)
+require(dplyr)
 require(plotly)
 
 anos <- seq(1994,2017,1)
@@ -29,6 +30,8 @@ for (ano in anos) {
     gc()
   }
 }
+
+write.csv2(proxysuper,paste0("data/serie2sm",anos[1],"-",ano,".csv"))
 
 #DESAGREGAR POR SETORES
 #Específico para projeto de Camilla
@@ -95,7 +98,7 @@ ay <- list(
   title = "(%)"
 )
 
-plot_ly() %>%
+graficorotatividade <- plot_ly() %>%
   add_lines(x = rotatproxysum$ano, y = rotatproxysum$desligados, name = "Desligamentos/Total Vínculos", color = "tomato" ) %>%
   add_lines(x = rotatproxysum$ano, y = rotatproxysum$desligateum, name = "Desligamentos até 1 ano (% Desl.)", yaxis = "y2", color = "tomato4") %>%
   layout(
@@ -105,9 +108,16 @@ plot_ly() %>%
     xaxis = list(title="Ano")
   )
 
+###########CAGED
 
+cagedanos <- paste0("2018","-",sprintf("%02d",seq(1,09,1)),"m")
 
-write.csv2(proxysuper,paste0("data/serie2sm",anos[1],"-",ano,".csv"))
+for (anocg in cagedanos) {
+download_sourceData("CAGED", i = anocg, replace = T, root_path = "~/RLocalData/CAGED/")
+}
+# download.file("https://raw.githubusercontent.com/guilhermejacob/guilhermejacob.github.io/master/scripts/mtps.R", "Nacional-Brasil/mtps.R")
+
+cagedb <- datavault_mtps(catalog)
 
 ###DIEESE
 ###https://www.dieese.org.br/canal/autenticaUsuario.do?login=internet&senha=gujeihee&sistema=xserve3
