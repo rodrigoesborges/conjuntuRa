@@ -18,8 +18,13 @@ nomescols <- c("ano","uf","divisao","percentual","vinculos")
 proxysuper <- data.frame(matrix(ncol = 5, nrow = 0))
 colnames(proxysuper) <-nomescols
 
-teste <- read_PNAD("pessoas", i = 1995, root_path = "~/RLocalData/PNAD/1995/DADOS
-                   ")
+####teste leitura
+
+anoteste <- 2002
+download_sourceData("PNAD",anoteste, unzip = T)
+
+teste <- read_PNAD("domicilios", anoteste)
+                   
 
 for (ano in anos) {
     #pnad <- read_PNAD("pessoas", i = ano, root_path = "~/RLocalData/PNAD"))
