@@ -6,7 +6,7 @@ library(dynlm)
 library(tempdisagg)
 
 
-###############INDICADORES DE DESEMPREGO#############
+# ----- Taxa de desemprego -----------------------------------------------------
 
 # coleta tabela da PNAD Contínua, variáveis Taxa de desocupação e subutilização - trim 4118
 desemprego <- API_SIDRA(6381, variavel = "4099") %>% 
@@ -17,16 +17,19 @@ desemprego <- API_SIDRA(6381, variavel = "4099") %>%
 
 write.csv(desemprego,"data/03-01-desemprego-IBGE.csv")
 
-# baixa estimativas de desemprego total, ou taxa composta de subutilização, e desagrega mês a mês
+# ----- Taxa de desemprego total - subutilização -------------------------------
+
+# baixa estimativas de desemprego total, ou taxa composta de subutilização
 tab4099 <- API_SIDRA(4099, variavel = "4118") %>% 
   transmute(data = as.Date(as.yearqtr(Trimestre, format = "%qº trimestre %Y")),
             valor = Valor)
 
+# desagrega mês a mês
 subutilizacao <- tibble(
-  valor = predict(td(tab4099$valor ~ 1, "average", 3, "denton-cholette")),
-  indicador = "Taxa de subutilização"
-) %>% 
-  mutate(data = seq(min(tab4099$data), along.with = valor, by = "1 month"))
+  data = seq(min(tab4099$data), along.with = nrow(tab4099), by = "1 month"),
+  indicador = "Taxa de subutilização",
+  valor = predict(td(tab4099$valor ~ 1, "average", 3, "denton-cholette"))
+)
 
 write.csv(subutilizacao,"data/03-02-subutilizacao.csv")
 dados <- bind_rows(subutilizacao, desemprego)
@@ -50,4 +53,3 @@ dados <- bind_rows(subutilizacao, desemprego)
 #       caption='Fonte: conjuntuRa com dados do IBGE via pacote RSIDRA.')
 ###########
 
-###############INDICADORES DE REMUNERAÇÃO#############
