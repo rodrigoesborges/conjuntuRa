@@ -18,6 +18,9 @@ function(input, output, session) {
   observeEvent(input$ir_monetaria, {
     shiny::updateTabsetPanel(session, "menu", "monetaria")
   })
+  observeEvent(input$ir_externo, {
+    shiny::updateTabsetPanel(session, "menu", "externo")
+  })
   
   mp_ <- reactive({
     meio_pagamento %>% 

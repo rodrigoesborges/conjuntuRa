@@ -8,6 +8,7 @@ dashboardPage(
       menuItem("Mercado de trabalho", tabName = "trabalho"),
       menuItem("Política fiscal", tabName = "fiscal"),
       menuItem("Política monetária", tabName = "monetaria"),
+      menuItem("Setor externo", tabName = "externo"),
       hr(),
       dateRangeInput("periodo", "Período da análise", Sys.Date() - 380, 
                      min = "1994-01-1", format = "dd/mm/yyyy", separator = " até ")
@@ -21,13 +22,14 @@ dashboardPage(
           h1("Painel de conjuntura"),
           p("Bem-vind@ ao painel de conjuntura."),
           br(), 
-          p("Este projeto visa dar acesso fácil a dados conjunturais atualizados"),
+          p("Este projeto visa dar acesso fácil a dados e indicadores sintéticos conjunturais atualizados"),
           div(
             actionButton("ir_atividade", "Atividade econômica"),
             actionButton("ir_inflacao", "Inflação"),
             actionButton("ir_trabalho", "Mercado de trabalho"),
             actionButton("ir_fiscal", "Política fiscal"),
-            actionButton("ir_monetaria", "Política monetária")
+            actionButton("ir_monetaria", "Política monetária"),
+            actionButton("ir_externo", "Setor externo")
           ),
           width = 12
         )
@@ -71,6 +73,9 @@ dashboardPage(
           tabPanel("Tabela", dataTableOutput("tab_creditosetorial")), 
           title = "Crédito Setorial", width = 12
         )
+      ),
+      tabItem(
+        "externo"
       )
     )
   )
