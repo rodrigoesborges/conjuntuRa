@@ -4,6 +4,7 @@ Projeto para análise de conjuntura - inicialmente brasileira - com R
 ## Indicadores visados pelo projeto
 
 ## NÍVEL NACIONAL
+
 ### Nível de atividade
 
 - [x] variação do PIB (IBGE) 
@@ -26,8 +27,8 @@ Projeto para análise de conjuntura - inicialmente brasileira - com R
 
 ### Mercado de trabalho
 
-- [ ] Taxa de desemprego (IBGE)
-- [ ] Taxa de desemprego total - subutilização da FT (IBGE)
+- [x] Taxa de desemprego (IBGE)
+- [x] Taxa de desemprego total - subutilização da FT (IBGE)
 - [ ] Taxa de desemprego - Aberto e Total (DIEESE)
 - [ ] Saldo de Admissões e Desligamentos (CAGED)
 
@@ -43,8 +44,8 @@ Projeto para análise de conjuntura - inicialmente brasileira - com R
 - [x] Base Monetária, Meios de pagamento (M1 a M4) e componentes (BCB)
 - [x] Taxa Over/SELIC (BCB)
 - [x] Condicionantes da Base Monetária (BCB)
-- [ ] Saldo das Operações de Crédito no Sistema Financeiro (BCB)
-- [ ] Endividamento por setor Institucional (BCB)
+- [x] Saldo das Operações de Crédito no Sistema Financeiro (BCB)
+- [x] Endividamento por setor Institucional (BCB)
 - [ ] Índice de Custo do Crédito (BCB)
 
 ### Setor Externo
