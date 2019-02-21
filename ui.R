@@ -43,7 +43,7 @@ dashboardPage(
           tabPanel("Gráfico",plotlyOutput("graf_pibr")),
           tabPanel("Tabela",dataTableOutput("tab_pibr")),
           title = "Crescimento do PIB"
-        )
+        ),
         tabBox(
           tabPanel("Gráfico",plotlyOutput("graf_pfi")),
           tabPanel("Tabela",dataTableOutput("tab_pfi")),
@@ -57,7 +57,7 @@ dashboardPage(
           tabPanel("Gráfico",plotlyOutput("graf_ipca")),
           tabPanel("Tabela",dataTableOutput("tab_ipca")),
           title = "IPCA (var %)"
-        )
+        ),
         tabBox(
           tabPanel("Gráfico",plotlyOutput("graf_cacomp")),
           tabPanel("Tabela",dataTableOutput("tab_cacomp")),
