@@ -29,7 +29,7 @@ dashboardPage(
             actionButton("ir_trabalho", "Mercado de trabalho"),
             actionButton("ir_fiscal", "Política fiscal"),
             actionButton("ir_monetaria", "Política monetária"),
-            actionButton("ir_externo", "Setor externo")
+            actionButton("ir_externo", "Setor externo"),
             actionButton("ir_internacionais", "Internacionais")
             
           ),
