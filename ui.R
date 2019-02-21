@@ -22,7 +22,7 @@ dashboardPage(
           h1("Painel de conjuntura"),
           p("Bem-vind@ ao painel de conjuntura."),
           br(), 
-          p("Este projeto visa dar acesso fácil a dados e indicadores sintéticos conjunturais atualizados"),
+          p("Este projeto visa facilitar a exploração de uma síntese de dados e indicadores conjunturais atualizados"),
           div(
             actionButton("ir_atividade", "Atividade econômica"),
             actionButton("ir_inflacao", "Inflação"),
@@ -30,16 +30,39 @@ dashboardPage(
             actionButton("ir_fiscal", "Política fiscal"),
             actionButton("ir_monetaria", "Política monetária"),
             actionButton("ir_externo", "Setor externo")
+            actionButton("ir_internacionais", "Internacionais")
+            
           ),
           width = 12
         )
         
       ),
       tabItem(
-        "atividade"
+        "atividade",
+        tabBox(
+          tabPanel("Gráfico",plotlyOutput("graf_pibr")),
+          tabPanel("Tabela",dataTableOutput("tab_pibr")),
+          title = "Crescimento do PIB"
+        )
+        tabBox(
+          tabPanel("Gráfico",plotlyOutput("graf_pfi")),
+          tabPanel("Tabela",dataTableOutput("tab_pfi")),
+          title = "Produção Física Industrial (var %)"
+        )
         ),
+
       tabItem(
-        "inflacao"
+        "inflacao",
+        tabBox(
+          tabPanel("Gráfico",plotlyOutput("graf_ipca")),
+          tabPanel("Tabela",dataTableOutput("tab_ipca")),
+          title = "IPCA (var %)"
+        )
+        tabBox(
+          tabPanel("Gráfico",plotlyOutput("graf_cacomp")),
+          tabPanel("Tabela",dataTableOutput("tab_cacomp")),
+          title = "IPCA - Componentes (var %)"
+        )
       ),
       tabItem(
         "trabalho"
@@ -52,7 +75,7 @@ dashboardPage(
         tabBox(
           tabPanel("Gráfico", plotlyOutput("graf_mp")),
           tabPanel("Tabela", dataTableOutput("tab_mp")), 
-          title = "Meios de Pagamentos"
+          title = "Meios de Pagamento"
         ),
         tabBox(
           tabPanel("Gráfico", plotlyOutput("graf_div")),
@@ -76,6 +99,9 @@ dashboardPage(
       ),
       tabItem(
         "externo"
+      ),
+      tabItem(
+        "internacionais"
       )
     )
   )
