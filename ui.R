@@ -15,6 +15,10 @@ dashboardPage(
     )
   ),
   dashboardBody(
+    ### Mudança do tema
+    shinyDashboardThemes(
+      theme = "purple_gradient"
+    )
     tabItems(
       tabItem(
         "inicio", 
@@ -67,8 +71,8 @@ dashboardPage(
       tabItem(
         "trabalho",
         tabBox(
-          tabPanel("Gráfico",plotlyOutput("graf_desemprego")),
-          tabPanel("Tabela",dataTableOutput("tab_desemprego")),
+          tabPanel("Gráfico",plotlyOutput("graf_desibge")),
+          tabPanel("Tabela",dataTableOutput("tab_desibge")),
           title = "Taxa de Desemprego (%)"
         ),
         tabBox(

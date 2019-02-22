@@ -21,6 +21,34 @@ function(input, output, session) {
   observeEvent(input$ir_externo, {
     shiny::updateTabsetPanel(session, "menu", "externo")
   })
+  desibge_ <- reactive({
+    desempregoibge %>% 
+      filter(between(date, input$periodo[1], input$periodo[2]))
+  })
+  
+  output$graf_desibge <- renderPlotly({
+    desibge <- desibge_()
+    
+    dif_tempo <- diff(range(mp$date))
+    intervalo <- ifelse(dif_tempo < 500, "1 month",
+                        ifelse(dif_tempo < 1000, "2 months", "1 year"))
+    
+    ggplot(desibge, aes(date, valor, col = indicador)) +
+      geom_line(size = 1) +
+      scale_x_date("", date_breaks = intervalo, date_labels = "%b / %Y") +
+      scale_y_continuous("") +
+      ggtitle("Taxa de Desemprego IBGE (%)")
+    
+    ggplotly()
+  })
+  
+  output$tab_desibge <- renderDataTable({
+    mutate(desibge_(), date = format(date, "%d/%m/%Y")) %>% 
+      spread(indicador, valor)
+  }, options = list(pageLength = 10, scrollX = TRUE))
+  
+  # --
+  
   
   mp_ <- reactive({
     meio_pagamento %>% 
