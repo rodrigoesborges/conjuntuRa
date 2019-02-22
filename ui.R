@@ -65,7 +65,27 @@ dashboardPage(
         )
       ),
       tabItem(
-        "trabalho"
+        "trabalho",
+        tabBox(
+          tabPanel("Gráfico",plotlyOutput("graf_desemprego")),
+          tabPanel("Tabela",dataTableOutput("tab_desemprego")),
+          title = "Taxa de Desemprego (%)"
+        ),
+        tabBox(
+          tabPanel("Gráfico",plotlyOutput("graf_subutft")),
+          tabPanel("Tabela",dataTableOutput("tab_subutft")),
+          title = "Taxa de Subutilização da Força de Trabalho (%)"
+        ),
+        tabBox(
+          tabPanel("Gráfico",plotlyOutput("graf_rotatf")),
+          tabPanel("Tabela",dataTableOutput("tab_rotatf")),
+          title = "Rotatividade no Mercado Formal de Trabalho (%)"
+        ),
+        tabBox(
+          tabPanel("Gráfico",plotlyOutput("graf_htrab")),
+          tabPanel("Tabela",dataTableOutput("tab_htrab")),
+          title = "Horas Trabalhadas por Setor"
+        )
       ),
       tabItem(
         "fiscal"
