@@ -18,7 +18,7 @@ dashboardPage(
     ### Mudança do tema
     shinyDashboardThemes(
       theme = "purple_gradient"
-    )
+    ),
     tabItems(
       tabItem(
         "inicio", 
