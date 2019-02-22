@@ -4,7 +4,7 @@ library(tidyverse)
 library(zoo)
 library(dynlm)
 library(tempdisagg)
-
+library(stringr)
 
 # ----- Taxa de desemprego -----------------------------------------------------
 
@@ -15,7 +15,7 @@ desemprego <- API_SIDRA(6381, variavel = "4099") %>%
             valor = Valor) %>% 
   as_data_frame()
 
-write.csv(desemprego,"data/03-01-desemprego-IBGE.csv")
+write.csv(desemprego,"data/03-01-desemprego-IBGE.csv",row.names = FALSE)
 
 # ----- Taxa de desemprego total - subutilização -------------------------------
 
@@ -31,7 +31,7 @@ subutilizacao <- tibble(
   valor = predict(td(tab4099$valor ~ 1, "average", 3, "denton-cholette"))
 )
 
-write.csv(subutilizacao,"data/03-02-subutilizacao.csv")
+write.csv(subutilizacao,"data/03-02-subutilizacao.csv", row.names = FALSE)
 dados <- bind_rows(subutilizacao, desemprego)
 
 
