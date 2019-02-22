@@ -17,7 +17,7 @@ dashboardPage(
   dashboardBody(
     ### Mudança do tema
     shinyDashboardThemes(
-      theme = "purple_gradient"
+      theme = "boe_website"
     ),
     tabItems(
       tabItem(
