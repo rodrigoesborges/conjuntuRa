@@ -1,6 +1,6 @@
 library(RSIDRA)
 library(tidyverse)
-
+library(stringr)
 # ----- IPCA (geral) -----------------------------------------------------------
 ipca_cheio_mes <- API_SIDRA(1419, 315, 7169, periodo = "last4", variavel = "63") %>% 
   select(mes = Mês, Valor) %>% 
